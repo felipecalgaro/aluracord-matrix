@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import appConfig from '../config.json';
 
-function Titulo(props) {
+function Title(props) {
     const Tag = props.tag || 'h1';
     return (
         <>
@@ -19,7 +19,7 @@ function Titulo(props) {
     );
 }
 
-export default function PaginaInicial() {
+export default function HomePage() {
     const [username, setUsername] = useState("")
     const route = useRouter()
 
@@ -28,8 +28,7 @@ export default function PaginaInicial() {
             <Box
                 styleSheet={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: appConfig.theme.colors.primary[500],
-                    backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
+                    backgroundImage: 'url(https://cdn.universoracionalista.org/wp-content/uploads/2020/06/gargantua-scaled.jpg)',
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 }}
             >
@@ -59,9 +58,16 @@ export default function PaginaInicial() {
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                             width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
                         }}
+                        autocomplete="off"
                     >
-                        <Titulo tag="h2">Boas vindas de volta!</Titulo>
-                        <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
+                        <Title tag="h2">Welcome back!</Title>
+                        <Text variant="body3" styleSheet={{
+                            marginBottom: '32px',
+                            marginTop: '8px',
+                            fontSize: '15px',
+                            color: appConfig.theme.colors.neutrals[300],
+                            fontFamily: "sans-serif"
+                        }}>
                             {appConfig.name}
                         </Text>
 
@@ -79,10 +85,11 @@ export default function PaginaInicial() {
                                 setUsername(e.target.value)
                             }}
                             value={username}
+                            placeholder="Github username"
                         />
                         <Button
                             type='submit'
-                            label='Entrar'
+                            label='Enter'
                             fullWidth
                             buttonColors={{
                                 contrastColor: appConfig.theme.colors.neutrals["000"],
@@ -111,24 +118,33 @@ export default function PaginaInicial() {
                             minHeight: '240px',
                         }}
                     >
-                        <Image
-                            styleSheet={{
-                                borderRadius: '50%',
-                                marginBottom: '16px',
-                            }}
-                            src={username.length > 2 ? `https://github.com/${username}.png` : null}
-                        />
-                        <Text
-                            variant="body4"
-                            styleSheet={{
-                                color: appConfig.theme.colors.neutrals[200],
-                                backgroundColor: appConfig.theme.colors.neutrals[900],
-                                padding: '3px 10px',
-                                borderRadius: '1000px'
-                            }}
-                        >
-                            {username.length > 2 ? username : null}
-                        </Text>
+                        {username.length > 2 ? (
+                            <>
+                                <a target="_blank" href={`https://github.com/${username}`}>
+                                    <Image
+                                        styleSheet={{
+                                            borderRadius: '50%',
+                                            border: '3px solid',
+                                            borderColor: appConfig.theme.colors.primary[400],
+                                            marginBottom: '16px',
+                                        }}
+                                        src={`https://github.com/${username}.png`}
+                                    />
+                                </a>
+                                <Text
+                                    variant="body4"
+                                    styleSheet={{
+                                        color: appConfig.theme.colors.neutrals[200],
+                                        backgroundColor: appConfig.theme.colors.neutrals[900],
+                                        padding: '3px 10px',
+                                        borderRadius: '1000px',
+                                        fontFamily: 'sans-serif'
+                                    }}
+                                >
+                                    {username}
+                                </Text>
+                            </>
+                        ) : null}
                     </Box>
                     {/* Photo Area */}
                 </Box>
@@ -137,6 +153,6 @@ export default function PaginaInicial() {
     );
 }
 
-// estilizar
+// // estilizar
 // refatorar
 // mostrar mais dados com a api do github
